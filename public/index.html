@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Beta Project - 金句票選</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div id="login-page" class="page active">
+        <div class="login-container">
+            <h1>Beta Project</h1>
+            <input type="text" id="userName" placeholder="姓名 (必填)" required>
+            <input type="email" id="userEmail" placeholder="Email信箱 (必填)" required>
+            <input type="text" id="userLine" placeholder="Line ID (選填)">
+            <button onclick="startVoting()">進入投票</button>
+        </div>
+    </div>
+
+    <div id="vote-page" class="page">
+        <div class="header">
+            <span>Beta Project 金句票選</span>
+            <span id="votes-left-text">剩餘票數: 100</span>
+        </div>
+        <div id="feed-container" class="feed-view"></div>
+        <div class="footer-controls">
+            <button onclick="showSummary()" class="summary-btn">查看已選清單 / 總結</button>
+        </div>
+    </div>
+
+    <div id="summary-container" class="page summary-view">
+        <h2>你的選擇 (點擊方格可回去修改)</h2>
+        <div id="grid-container" class="grid"></div>
+        <div class="controls">
+            <button onclick="backToFeed()" class="back-btn">返回列表</button>
+            <button onclick="submitFinalVotes()" class="submit-btn">確認送出投票</button>
+        </div>
+    </div>
+
+    <div id="thankyou-page" class="page">
+        <div class="thankyou-container">
+            <h1>感謝河粉們的參與！</h1>
+            <p>你的投票紀錄已經成功送出，請靜待最終統計結果。</p>
+        </div>
+    </div>
+
+    <div id="admin-container" class="page admin-view">
+        <div style="display: flex; justify-content: space-between; width: 100%; max-width: 800px; align-items: center;">
+            <h2>管理員統計後台</h2>
+            <button onclick="clearAllData()" class="danger-btn">⚠️ 全部歸零</button>
+        </div>
+        <p id="admin-info" style="font-size: 20px; font-weight: bold; margin-bottom: 20px;"></p>
+        
+        <div class="admin-users-section">
+            <h3 style="margin-bottom: 10px;">已完成投票名單</h3>
+            <div style="overflow-x: auto;">
+                <table class="users-table">
+                    <thead><tr><th>姓名</th><th>Email</th><th>Line ID</th><th>完成時間</th><th>操作</th></tr></thead>
+                    <tbody id="admin-users-tbody"></tbody>
+                </table>
+            </div>
+        </div>
+        <h3 style="margin-top: 30px; margin-bottom: 15px;">各金句得票統計</h3>
+        <div id="admin-grid" class="grid"></div>
+    </div>
+
+    <script src="sentences.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>

@@ -1,0 +1,11 @@
+cd ~/Desktop
+
+mkdir Beta
+
+cd Beta
+
+node server.js
+
+http://localhost:3000
+
+同一個 Wi-Fi， Mac 終端機開啟新分頁輸入 ifconfig 找到本機 IP (例如 192.168.x.x)，接著在手機瀏覽器輸入 http://192.168.x.x:3000 可用手機進行測試
