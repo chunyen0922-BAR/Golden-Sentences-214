@@ -23,7 +23,7 @@ if (!admin.apps.length) {
 }
 
 const db = admin.firestore();
-const ADMINS = ['chunyen0922@gmail.com', 'hubeta1982@gmail.com'];
+const ADMINS = ['chunyen0922@gmail.com', 'pho@pho', 'hubeta1982@gmail.com'];
 
 // 2. 接收投票 (寫入 Firestore)
 app.post('/api/submit', async (req, res) => {
