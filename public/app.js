@@ -1,7 +1,7 @@
 let currentUser = { name: '', email: '', lineId: '' };
 let userVotes = new Set();
 const MAX_VOTES = 100;
-const ADMIN_EMAILS = ['chunyen0922@gmail.com', 'hubeta1982@gmail.com'];
+const ADMIN_EMAILS = ['chunyen0922@gmail.com', 'pho@pho', 'hubeta1982@gmail.com'];
 
 function startVoting() {
     currentUser.name = document.getElementById('userName').value.trim();
