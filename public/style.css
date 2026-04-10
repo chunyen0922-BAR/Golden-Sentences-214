@@ -23,7 +23,7 @@ body, html { margin: 0; padding: 0; width: 100%; height: 100%; background-color:
 .feed-view { display: flex; flex-direction: column; align-items: center; padding: 20px 5%; width: 100%; max-width: 800px; margin: 0 auto; }
 .card { background: white; color: #333; width: 100%; border-radius: 12px; padding: 30px; margin-bottom: 25px; box-shadow: 0 4px 8px rgba(0,0,0,0.15); display: flex; flex-direction: column; align-items: center; text-align: center; }
 .card-number { align-self: flex-start; font-size: 16px; color: #888; margin-bottom: 15px; font-weight: bold; }
-.card p { font-size: 28px; line-height: 1.6; margin-bottom: 25px; width: 100%; }
+.card p {  font-size: 28px; line-height: 1.6; margin-bottom: 25px; width: 100%; white-space: pre-wrap; /* 支援 \n 換行 */word-break: keep-all;  /* 中文排版技術：不切斷詞彙 */}/* 手機螢幕的專屬設定 (當螢幕寬度小於 600px 時自動觸發) */@media (max-width: 600px) {.card p {font-size: 20px; /* 在手機上自動縮小成 20px */} }
 .vote-btn { font-size: 18px; padding: 12px 35px; border-radius: 30px; border: 2px solid #4A3320; background-color: transparent; color: #4A3320; cursor: pointer; transition: 0.2s; font-weight: bold; }
 .vote-btn.voted { background-color: #4A3320; color: white; }
 
