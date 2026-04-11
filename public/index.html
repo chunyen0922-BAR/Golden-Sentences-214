@@ -48,9 +48,12 @@
 
     <div id="admin-container" class="page admin-view">
         <div style="display: flex; justify-content: space-between; width: 100%; max-width: 800px; align-items: center;">
-            <h2>管理員統計後台</h2>
-            <button onclick="clearAllData()" class="danger-btn">⚠️ 全部歸零</button>
-        </div>
+    <h2>管理員統計後台</h2>
+    <div>
+        <button onclick="downloadCSV()" style="background-color: #D4AF37; color: white; border: none; padding: 10px 15px; border-radius: 8px; font-weight: bold; cursor: pointer; margin-right: 10px; font-size: 14px;">📊 下載 CSV (前90名)</button>
+        <button onclick="clearAllData()" class="danger-btn">⚠️ 全部歸零</button>
+    </div>
+</div>
         <p id="admin-info" style="font-size: 20px; font-weight: bold; margin-bottom: 20px;"></p>
         
         <div class="admin-users-section">
