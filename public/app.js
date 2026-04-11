@@ -86,6 +86,8 @@ async function submitFinalVotes() {
 }
 
 // ----- 管理員專用功能 -----
+window.currentStatsArray = []; // 新增：暫存統計資料供 CSV 使用
+
 async function loadAdminDashboard() {
     try {
         const res = await fetch(`/api/admin/stats?email=${currentUser.email}`);
@@ -106,13 +108,53 @@ async function loadAdminDashboard() {
             });
         } else { tbody.innerHTML = '<tr><td colspan="5" style="text-align:center;">目前尚無人完成投票</td></tr>'; }
 
+        // 整理統計數據供排序使用
+        window.currentStatsArray = [];
+        for (let i = 0; i < sentences.length; i++) {
+            window.currentStatsArray.push({ index: i, votes: data.stats[i] || 0, text: sentences[i] });
+        }
+        
+        // 依照票數由高到低排序，並取出前 90 名 (且票數大於 0) 的編號
+        let sortedArray = [...window.currentStatsArray].sort((a, b) => b.votes - a.votes);
+        let top90Indices = new Set(sortedArray.slice(0, 90).filter(item => item.votes > 0).map(item => item.index));
+
         const grid = document.getElementById('admin-grid'); grid.innerHTML = '';
         for (let i = 0; i < sentences.length; i++) {
             let cell = document.createElement('div'); let v = data.stats[i] || 0;
-            cell.className = 'grid-cell admin-cell'; if (v > 0) cell.classList.add('selected');
+            cell.className = 'grid-cell admin-cell'; 
+            if (v > 0) cell.classList.add('selected');
+            if (top90Indices.has(i)) cell.classList.add('top-rank'); // 命中前 90 名，套用金色樣式
+
             cell.innerHTML = `${i + 1}<br><span>${v} 票</span>`; cell.title = sentences[i]; grid.appendChild(cell);
         }
     } catch (e) { console.error(e); }
+}
+
+// 新增：下載 CSV 的功能
+function downloadCSV() {
+    if (!window.currentStatsArray || window.currentStatsArray.length === 0) return alert("資料尚未載入");
+
+    // 加入 BOM 碼，確保 Excel 打開中文不會變亂碼
+    let csvContent = "\uFEFF排名,金句編號,得票數,金句內容\n";
+
+    // 取前 90 名
+    let sortedArray = [...window.currentStatsArray].sort((a, b) => b.votes - a.votes).slice(0, 90);
+
+    sortedArray.forEach((row, index) => {
+        if (row.votes > 0) { // 確保 0 票的不佔據排名
+            let escapedText = row.text.replace(/"/g, '""'); // CSV 防跑版處理
+            csvContent += `${index + 1},No.${row.index + 1},${row.votes},"${escapedText}"\n`;
+        }
+    });
+
+    const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement("a");
+    link.setAttribute("href", url);
+    link.setAttribute("download", "Pho_Project_Top90_金句統計.csv");
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
 }
 
 async function deleteUser(targetEmail) {
